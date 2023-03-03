@@ -8,4 +8,7 @@ import './css/styles.css';
 import './images/booking-logo.png'
 
 
+fetch('http://localhost:3001/api/v1/customers')
+ .then(resp => resp.json())
+ .then(data => console.log(data))
 console.log('This is the JavaScript entry file - your code begins here.');
