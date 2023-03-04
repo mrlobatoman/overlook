@@ -14,6 +14,7 @@ const bookings = [
     
       }
     ]
+
     const rooms = [
         {
             "number": 1,
@@ -32,6 +33,7 @@ const bookings = [
             "costPerNight": 477.38
           }
     ]
+
     const customers = [
         {
             "id": 1,
@@ -42,3 +44,5 @@ const bookings = [
             "name": "Rocio Schuster"
           }
     ]
+
+    export {bookings, customers, rooms}
