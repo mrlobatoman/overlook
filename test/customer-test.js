@@ -1,15 +1,19 @@
 import { customers, bookings, rooms } from './test-data'
 import { expect } from 'chai'
 import Customer from '../src/classes/customer'
+import Booking from '../src/classes/booking'
 
 let currentDate
 
 describe('Customer', () => {
     let customer1
     let customer2
+    let bookingData
     
 
     beforeEach(() => {
+        bookingData = rooms.map(booking => new Booking(booking))
+
         customer1 = new Customer(customers[0])
         customer2 = new Customer(customers[1])
         
@@ -65,7 +69,7 @@ describe('Customer', () => {
       expect(customer1.allBookings).to.deep.equal([bookings[0]])
      
       customer2.findCustomerBookings(bookings)
-      expect(customer2.allBookings).to.deep.equal([bookings[2], bookings[3]])
+      expect(customer2.allBookings).to.deep.equal([bookings[1], bookings[3]])
     })
 
     it('should add total spent on rooms', function() {
@@ -86,21 +90,22 @@ describe('Customer', () => {
     it('should get upcoming bookings', function() {
         customer1.getUpcomingBookings(bookings)
         expect(customer1.upcomingBookings).to.deep.equal([{
-            "id": "5fwrgu4i7k55hl6t8",
+            "id": "5fwrgu4i7k55hl6sz",
             "userID": 1,
-            "date": "2024/02/05",
-            "roomNumber": 12
+            "date": "2024/04/22",
+            "roomNumber": 15
         }
         ])
     })
     it('should get past bookings', function() {
         customer2.getPastBookings(bookings)
         expect(customer2.pastBookings).to.deep.equal([{
-            "id": "5fwrgu4i7k55hl6wx",
+            "id": "5fwrgu4i7k55hl6t5",
             "userID": 2,
-            "date": "2022/01/17",
-            "roomNumber": 17
+            "date": "2022/01/24",
+            "roomNumber": 24
         }
         ])
     })
+
  })
