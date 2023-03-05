@@ -1,3 +1,5 @@
+console.log('hello')
+
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
@@ -10,14 +12,10 @@ import Customer from './classes/customer.js'
 import Booking from './classes/booking.js'
 import Room from './classes/room.js'
 
-let bookingData
+let bookingData 
 let customerData = 0
-let roomData
-let currentCustomer
-let allBookings
-let allRooms
-let userUpcomingBookings
-let userPastBookings
+let roomsData
+
 
 let allMotelData
 
@@ -30,6 +28,11 @@ const customersDataF = fetch('http://localhost:3001/api/v1/customers')
  const bookingsDataF = fetch('http://localhost:3001/api/v1/bookings')
     .then(resp => resp.json())
 
+console.log(bookingsDataF)
+
+
+
+
  Promise.all([customersDataF, roomsDataF, bookingsDataF])
     .then((data) => {
         allMotelData = {
@@ -37,20 +40,16 @@ const customersDataF = fetch('http://localhost:3001/api/v1/customers')
             rooms: data[1].rooms,
             bookings: data[2].bookings
         }
-        loadCustomer(allMotelData.customers)
-        loadRooms(allMotelData.rooms)
-        displayUserInfo()
-        console.log(allMotelData)
         return allMotelData
     })
     .then(
         (allMotelData) => {
             customerData = new Customer(allMotelData.customers[0])
-            bookingData = new Booking(allMotelData.bookings)
-            roomData = new Room(allMotelData.rooms)
+            bookingData = allMotelData.bookings.map(booking => new Booking(booking))
+            roomsData = allMotelData.rooms.map(room => new Room(room))
             console.log(customerData)
             console.log(bookingData)
-            console.log('RUNNING')
+            console.log(roomsData)
         }
     )
 
