@@ -11,6 +11,23 @@ import './images/booking-logo.png'
 import Customer from './classes/customer.js'
 import Booking from './classes/booking.js'
 import Room from './classes/room.js'
+import { fetchData } from './api-calls'
+
+
+let allCustomers, allRooms, allBookings
+
+Promise.all([fetchData('customers'), fetchData('rooms'), fetchData('bookings')])
+.then(data => {
+    allCustomers = data[0].customers
+    allRooms = data[1].rooms.map(room => new Room(room))
+    allBookings = data[2].bookings.map(booking => new Booking(booking))
+    console.log(allCustomers)
+    console.log(allRooms)
+    console.log(allBookings)
+}
+ 
+    
+)
 
 let bookingData 
 let customerData = 0
@@ -36,24 +53,6 @@ loginForm.addEventListener('click', preventLoad)
 
 
 
-
-let allMotelData
-
-const customersDataF = fetch('http://localhost:3001/api/v1/customers')
-    .then(resp => resp.json())
-
- const roomsDataF = fetch('http://localhost:3001/api/v1/rooms')
-    .then(resp => resp.json())
-
- const bookingsDataF = fetch('http://localhost:3001/api/v1/bookings')
-    .then(resp => resp.json())
-
-console.log(bookingsDataF)
-
-
-
-
-
    //========================Functions=========================
 
    function verifyLogin(){
@@ -69,36 +68,20 @@ console.log(bookingsDataF)
         console.log(userID)
         console.log(userName)
 
-    if(userName === 'customer' && (userID > 0 && userID <=50)) {
-        clientNumber = (Number(userID)).toString()
-        customerURL = `http://localhost:3001/api/v1/customers/${clientNumber}`
+    if(userName !== 'customer' || (parseInt(userID) < 1 || parseInt(userID) > 50)) {
+        incorrectLogin.classList.remove('hidden')
         }
     } else {
-        incorrectLogin.classList.remove('hidden')
+        Promise.all(customersDataF`/${userID}`)
     }
 }
 
-Promise.all([customersDataF, roomsDataF, bookingsDataF])
-.then((data) => {
-    allMotelData = {
-        customers: data[0].customers,
-        rooms: data[1].rooms,
-        bookings: data[2].bookings
-    }
-    return allMotelData
-})
-.then(
-    (allMotelData) => {
-        customerData = allMotelData.customers.map(customer => new Customer(customer))
-        bookingData = allMotelData.bookings.map(booking => new Booking(booking))
-        roomsData = allMotelData.rooms.map(room => new Room(room))
-        console.log(customerData)
-        console.log(bookingData)
-        console.log(roomsData)
-    }
-)
     
-    
+    function createCustomer(data) {
+        customer = new Customer(data)
+        console.log(customer)
+        return customer
+    }
         
  
 
