@@ -1,3 +1,5 @@
+import Booking from './booking.js'
+
 class Customer {
     constructor(customerObj) {
         this.id = customerObj.id
@@ -7,6 +9,11 @@ class Customer {
         this.upcomingBookings = []
         this.allBookings = []
     }
+
+    createBooking(bookingData){
+        return bookingData.map(currentBooking => new Booking(currentBooking))
+    }
+
     findCustomerBookings(bookingData) {
         this.allBookings = bookingData.filter(currBooking => {
             return currBooking.userID === this.id
