@@ -10,10 +10,14 @@ import Customer from './classes/customer.js'
 import Booking from './classes/booking.js'
 import Room from './classes/room.js'
 
-let bookingData 
+let bookingData
 let customerData = 0
 let roomData
-
+let currentCustomer
+let allBookings
+let allRooms
+let userUpcomingBookings
+let userPastBookings
 
 let allMotelData
 
@@ -33,6 +37,9 @@ const customersDataF = fetch('http://localhost:3001/api/v1/customers')
             rooms: data[1].rooms,
             bookings: data[2].bookings
         }
+        loadCustomer(allMotelData.customers)
+        loadRooms(allMotelData.rooms)
+        displayUserInfo()
         console.log(allMotelData)
         return allMotelData
     })
@@ -43,11 +50,31 @@ const customersDataF = fetch('http://localhost:3001/api/v1/customers')
             roomData = new Room(allMotelData.rooms)
             console.log(customerData)
             console.log(bookingData)
-            console.log()
+            console.log('RUNNING')
         }
     )
 
-    
+    function loadCustomer(data) {
+        currentCustomer = new Customer(data)
+        allBookings = currentCustomer.createBooking(allMotelData.bookings)
+        return currentCustomer
+    }
+
+    function displayUserInfo() {
+        gatherAccountInfo()
+    }
+
+    function loadRooms(data) {
+        allRooms = data.map(currentBooking => new Room(currentBooking))
+    }
+
+    function gatherAccountInfo() {
+        currentCustomer.getUpcomingBookings(allBookings)
+        userUpcomingBookings = currentCustomer.upcomingBookings
+        currentCustomer.getPastBookings(allBookings)
+        userPastBookings = currentCustomer.pastBookings
+       
+    } 
 
 
 
