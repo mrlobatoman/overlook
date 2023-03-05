@@ -24,10 +24,10 @@ Promise.all([fetchData('customers'), fetchData('rooms'), fetchData('bookings')])
     console.log(allCustomers)
     console.log(allRooms)
     console.log(allBookings)
-}
+})
  
     
-)
+
 
 let bookingData 
 let customerData = 0
@@ -68,20 +68,18 @@ loginForm.addEventListener('click', preventLoad)
         console.log(userID)
         console.log(userName)
 
-    if(userName !== 'customer' || (parseInt(userID) < 1 || parseInt(userID) > 50)) {
-        incorrectLogin.classList.remove('hidden')
-        }
-    } else {
-        Promise.all(customersDataF`/${userID}`)
+    if(userName === 'customer' || (parseInt(userID) > 1 || parseInt(userID) < 50)) {
+        Promise.all([fetchData(`customers/${userID}`)])
+        .then(data => {
+            customer = new Customer(data[0], allRooms, allBookings)
+            console.log('FIRING2')
+            console.log(customer)
+        })
+    }
     }
 }
 
     
-    function createCustomer(data) {
-        customer = new Customer(data)
-        console.log(customer)
-        return customer
-    }
         
  
 
