@@ -1,5 +1,3 @@
-console.log('hello')
-
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
@@ -26,9 +24,6 @@ Promise.all([fetchData('customers'), fetchData('rooms'), fetchData('bookings')])
     console.log(allBookings)
 })
  
-    
-
-
 let bookingData 
 let customerData = 0
 let roomsData
@@ -69,21 +64,22 @@ loginForm.addEventListener('click', preventLoad)
         userID = getID.splice(8,2).join('')
         userName = getID.splice(0,8).join('')
 
-    if(userName === 'customer' || (parseInt(userID) > 1 || parseInt(userID) < 50)) {
-        Promise.all([fetchData(`customers/${userID}`)])
-        .then(data => {
-            customer = new Customer(data[0], allRooms, allBookings)
-            displayAccountInfo()
-            setCurrentDate()
-            console.log(customer)
-        })
-    }
+        if(userName === 'customer' || (parseInt(userID) > 1 || parseInt(userID) < 50)) {
+            Promise.all([fetchData(`customers/${userID}`)])
+            .then(data => {
+                customer = new Customer(data[0], allRooms, allBookings)
+                displayAccountInfo()
+                setCurrentDate()
+                console.log(customer)
+            })
+        }
     }
 }
 
     function displayAccountInfo() {
         gatherAccountInfo()
         upComingBookingsDiplay()
+        pastBookingsDiplay()
     } 
 
     function gatherAccountInfo() {
@@ -111,12 +107,30 @@ displayFormatedBookings.forEach(booking => {
         ${capitalizeFirstChar(booking.bedSize)},
         Beds:${booking.numBeds}
         </h3>
-
      </article>
      </article
     `
     })  
 }
+
+function pastBookingsDiplay() {
+    let displayFormatedBookings = bookingsDisplay(userPastBookings)
+    displayFormatedBookings.forEach(booking => {
+        console.log('COST', booking.costPerNight)
+        pastBookingsList.innerHTML +=
+        `<article class="past-booking-container">
+         <article>
+         <article>
+            <h3 class="test">
+            ${booking.date},
+            ${capitalizeFirstChar(booking.roomType)},
+            Bill: $${booking.costPerNight}
+            </h3>
+         </article>
+         </article
+        `
+        })  
+    }
 
 function bookingsDisplay(bookings) {
     const formatedDisplay = bookings.map(currentBooking => {
@@ -148,7 +162,6 @@ function setCurrentDate(){
     currentDate = `${currentYear}${currentMonth}${currentDay}`
     currentDate = Number(currentDate)
 }
-
 
 function preventLoad(event) {
     event.preventDefault()
