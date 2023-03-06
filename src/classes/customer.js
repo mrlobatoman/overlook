@@ -60,8 +60,27 @@ class Customer {
         })
     }
 
+    findAvailableRooms(date, bookingData, roomData) {
+        const bookingList = bookingData.filter(currentBooking => {
+            let formatDate = currentBooking.date.split('/')
+            formatDate = Number(formatDate.join(''))
+            return formatDate === date
+        })
+        let getRoomNumber = bookingList.map(room => {
+            return room.roomNumber
+        })
+        let availableRooms = roomData.reduce((acc, room) => {
+            if(getRoomNumber.includes(room.number)) {
+                acc.push(room)
+            }
+            return acc
+        }, [])
+        console.log('AVAIL', availableRooms)
+        return availableRooms
+    }
+
     totalCost() {
-        console.log('ROOMS', this.allRooms)
+        // console.log('ROOMS', this.allRooms)
         // console.log('BOOKINGS', this.allBookings)
        this.spent = this.allBookings.reduce((total, room) => {
         total += this.allRooms.find(booking => booking.number === room.roomNumber).costPerNight
