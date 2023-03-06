@@ -13,8 +13,16 @@
     <img>
   </header>
   <main>
+    <section class="login-view" id="loginView">
+      <form class="login-form" id="loginForm">
+        <input class="username-textbox" type="text" id="username" name="username" placeholder="Username">
+        <input class="password-textbox" type="text" id="password" name="password" placeholder="Password">
+        <button class="login-button" id="loginButton">Login</button>
+        <h3 class="incorrect-login-text hidden" id="incorrectLoginText">*incorrect login try again</h2>
+      </form>
+    </section>
     <section class="reservations-view">
-      <section class="left-section">
+      <section class="left-section" id="upcomingBookingsList">
         <h2>Upcoming:</h2>
       </section>
       <section class="middle-section">
@@ -25,7 +33,7 @@
           <h4 class="total-spent-text"></h4>
         </article>
       </section>
-      <section class="right-section">
+      <section class="right-section" id="pastBookingsList">
         <h2>Previous:</h2>
       </section>
     </section>

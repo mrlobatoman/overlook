@@ -1,13 +1,14 @@
 import Booking from './booking.js'
 
 class Customer {
-    constructor(customerObj) {
+    constructor(customerObj, allRooms, allBookings) {
         this.id = customerObj.id
         this.name = customerObj.name
         this.spent = 0
         this.pastBookings = []
         this.upcomingBookings = []
-        this.allBookings = []
+        this.allBookings = allBookings
+        this.allRooms = allRooms
     }
 
     createBooking(bookingData){
