@@ -34,6 +34,8 @@ let customerData = 0
 let roomsData
 let customer
 let clientNumber
+let userUpcomingBookings
+let userPastBookings
 
 
 let customerURL
@@ -47,6 +49,7 @@ const loginButton = document.querySelector('#loginButton')
 const incorrectLogin = document.querySelector('#incorrectLoginText')
 const loginView = document.querySelector('#loginView')
 const currentUser = document.querySelector('#userText')
+const upcomingBookingsList = document.querySelector('#upcomingBookingsList')
 
 loginButton.addEventListener('click', verifyLogin)
 loginForm.addEventListener('click', preventLoad)
@@ -65,14 +68,13 @@ loginForm.addEventListener('click', preventLoad)
     if(getID.length === 9 || getID.length === 10) {
         userID = getID.splice(8,2).join('')
         userName = getID.splice(0,8).join('')
-        console.log(userID)
-        console.log(userName)
 
     if(userName === 'customer' || (parseInt(userID) > 1 || parseInt(userID) < 50)) {
         Promise.all([fetchData(`customers/${userID}`)])
         .then(data => {
             customer = new Customer(data[0], allRooms, allBookings)
-            console.log('FIRING2')
+            displayAccountInfo()
+            setCurrentDate()
             console.log(customer)
         })
     }
@@ -80,12 +82,9 @@ loginForm.addEventListener('click', preventLoad)
 }
 
     
-        
- 
-
     function displayAccountInfo() {
-        currentUser.innerText = customer.name + "'s account"
         gatherAccountInfo()
+        upComingBookingsDiplay()
     } 
 
     function gatherAccountInfo() {
@@ -95,8 +94,58 @@ loginForm.addEventListener('click', preventLoad)
         userPastBookings = customer.pastBookings
     } 
 
+    function upComingBookingsDiplay() {
+let displayFormatedBookings = bookingsDisplay(userUpcomingBookings)
+displayFormatedBookings.forEach(booking => {
+    console.log(booking)
+    upcomingBookingsList.innerHTML +=
+    `<article class="upcoming -booking-container">
+     <article>
+     <article>
+        <h3 class="test">
+        ${booking.date}
+        ${booking.roomType}
+        ${booking.bedSize}
+        </h3>
+
+     </article>
+     </article
+    `
+    })  
+}
 
 
+
+function bookingsDisplay(bookings) {
+    const formatedDisplay = bookings.map(currentBooking => {
+        let userBookingInfo = {}
+        userBookingInfo.date = currentBooking.date
+        userBookingInfo.id = currentBooking.id
+        userBookingInfo.dateNumber = currentBooking.date.split('/').join('')
+        let roomInfo = allRooms.find(currentRoom => {
+            return currentRoom.number === currentBooking.roomNumber
+        })
+        userBookingInfo.roomType = roomInfo.type
+        userBookingInfo.bidet = roomInfo.bidet
+        userBookingInfo.bedSize = roomInfo.bedSize
+        userBookingInfo.numBeds = roomInfo.numBeds
+        userBookingInfo.costPerNight = roomInfo.cost
+        console.log('roomInfo', userBookingInfo)
+        return userBookingInfo
+    })
+    return formatedDisplay.sort((a, b) => a.dateNumber - b.dateNumber)
+}
+
+let currentDate
+
+function setCurrentDate(){
+    const date = new Date()
+    let currentDay = date.getDate()
+    let currentMonth = date.getMonth() + 1
+    let currentYear = date.getFullYear()
+    currentDate = `${currentYear}${currentMonth}${currentDay}`
+    currentDate = Number(currentDate)
+}
 
 
 function preventLoad(event) {

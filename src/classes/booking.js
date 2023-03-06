@@ -4,6 +4,7 @@ class Booking {
         this.userID = bookingObj.userID
         this.date = bookingObj.date
         this.roomNumber = bookingObj.roomNumber
+        this.dateNumber = 0
     }
 }
 
