@@ -49,6 +49,8 @@ const upcomingBookingsList = document.querySelector('#upcomingBookingsList')
 const searchDateButton = document.querySelector('#searchDateButton')
 const roomFilterButton = document.querySelector('#roomFilterButton')
 const requestedDate = document.querySelector('#requestedDate')
+const availableRooms = document.querySelector('#availableRooms')
+
 
 loginButton.addEventListener('click', verifyLogin)
 loginForm.addEventListener('click', preventLoad)
@@ -161,8 +163,15 @@ function bookingsDisplay(bookings) {
 
 
 function getAvailableRooms() {
-   console.log('ARE YOU WORKING')
-    let wut = requestedDate.value.split('-')
+    let numberedDate = requestedDate.value.split('-')
+    numberedDate = Number(numberedDate.join(''))
+    console.log(numberedDate)
+    if(numberedDate === 0) {
+        availableRooms.className = 'available-rooms-hidden'
+        alert('Please select a date')
+    }
+   
+   
     
     // datePickerData = requestedDate.value.split('-')
     // console.log(datePickerData)
