@@ -110,6 +110,12 @@ describe('Customer', () => {
         }
         ])
     })
+
+    it('should find all available rooms based on date', function() {
+        let result1 = customer1.findAvailableRooms(20240422, bookingData, roomData)
+        expect(result1.length).to.equal(1)
+    })
+
     it('should find sum of users total spent on rooms', function() {
       customer1 = new Customer(customers[0], roomData, bookingData)
       console.log('CUSTOMER1', this.allRooms)
