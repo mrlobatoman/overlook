@@ -31,6 +31,8 @@ let customer
 let clientNumber
 let userUpcomingBookings
 let userPastBookings
+let currentDate
+// let datePickerData
 
 
 let customerURL
@@ -45,9 +47,16 @@ const incorrectLogin = document.querySelector('#incorrectLoginText')
 const loginView = document.querySelector('#loginView')
 const currentUser = document.querySelector('#userText')
 const upcomingBookingsList = document.querySelector('#upcomingBookingsList')
+const searchDateButton = document.querySelector('#searchDateButton')
+const roomFilterButton = document.querySelector('#roomFilterButton')
+const requestedDate = document.querySelector('#requestedDate')
+const availableRooms = document.querySelector('#availableRooms')
+
 
 loginButton.addEventListener('click', verifyLogin)
 loginForm.addEventListener('click', preventLoad)
+searchDateButton.addEventListener('click', getAvailableRooms)
+roomFilterButton.addEventListener('click', filterAvailableRooms)
 
 
 
@@ -70,7 +79,6 @@ loginForm.addEventListener('click', preventLoad)
                 customer = new Customer(data[0], allRooms, allBookings)
                 displayAccountInfo()
                 setCurrentDate()
-                console.log(customer)
             })
         }
     }
@@ -152,12 +160,28 @@ function bookingsDisplay(bookings) {
     return formatedDisplay.sort((a, b) => a.dateNumber - b.dateNumber)
 }
 
-let currentDate
+
+
+function getAvailableRooms() {
+    let numberedDate = requestedDate.value.split('-')
+    numberedDate = Number(numberedDate.join(''))
+    console.log(numberedDate)
+    if(numberedDate === 0) {
+        alert('Please select a date')
+    } else if(numberedDate < currentDate) {
+        alert('Please select a future date')
+    } else {
+        availableRooms.className = 'available-rooms'
+    }
+}
+
+
+
 
 function setCurrentDate(){
     const date = new Date()
-    let currentDay = date.getDate()
-    let currentMonth = date.getMonth() + 1
+    let currentDay = ('0' + (date.getDate())).slice(-2)
+    let currentMonth = ('0' + (date.getMonth()+1)).slice(-2)
     let currentYear = date.getFullYear()
     currentDate = `${currentYear}${currentMonth}${currentDay}`
     currentDate = Number(currentDate)

@@ -21,7 +21,9 @@
         </form>
       </section>
       <section class="date-picker">
-        <input type="date">
+        <input type="date" id="requestedDate">
+        <button id="searchDateButton">Search</button>
+      <section class="room-filter" id="roomFilter">
         <select class="dropdown-menu">
           <option value="select room">Select Room</option>
           <option value="single room">Single Room</option>
@@ -29,7 +31,7 @@
           <option value="suite">Suite</option>
           <option value="residential suite">Residential Suite</option>
         </select>
-        <button>Search</button>
+        <button class="filter-button" id="roomFilterButton">Search</button>
       </section>
     </section>
   </header>
@@ -51,8 +53,13 @@
         <h2>Previous:</h2>
       </section>
     </section>
-    <section class="available-rooms-section">
-
+    <section class="available-rooms-section hidden" id="availableRooms">
+      <h2>Rooms Available</h2>
+      <section class="available-rooms-data" id="availableRoomsData">
+      </section>
+    </section>
+    <section class="no-results hidden" id="noResults">
+      <h2 class="message">Bummer Bro(ah)</h2>
     </section>
   </main>
 
