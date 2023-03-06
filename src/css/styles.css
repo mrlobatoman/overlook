@@ -9,6 +9,21 @@ h1 {
   text-align: center;
   margin-bottom: 3%;
 }
+.user-input-section {
+  display:flex;
+  justify-content: space-between;
+  margin-bottom: 3%;
+}
+
+.login-view {
+  margin-left: .7%;
+}
+
+.date-picker {
+  margin-right: .7%;
+}
+
+
 
 .reservations-view {
   display: flex;
@@ -19,6 +34,8 @@ h1 {
   background-color: rgba(255, 255, 255, 0.264);
   height: 70vh;
   width: 30vw;
+  text-align: center;
+  overflow: auto;
 }
 
 .middle-section {
@@ -33,3 +50,6 @@ h1 {
   width:35vw
 }
 
+.hidden {
+  display: none;
+}
