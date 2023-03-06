@@ -31,6 +31,7 @@ let customer
 let clientNumber
 let userUpcomingBookings
 let userPastBookings
+// let datePickerData
 
 
 let customerURL
@@ -45,9 +46,14 @@ const incorrectLogin = document.querySelector('#incorrectLoginText')
 const loginView = document.querySelector('#loginView')
 const currentUser = document.querySelector('#userText')
 const upcomingBookingsList = document.querySelector('#upcomingBookingsList')
+const searchDateButton = document.querySelector('#searchDateButton')
+const roomFilterButton = document.querySelector('#roomFilterButton')
+const requestedDate = document.querySelector('#requestedDate')
 
 loginButton.addEventListener('click', verifyLogin)
 loginForm.addEventListener('click', preventLoad)
+searchDateButton.addEventListener('click', getAvailableRooms)
+roomFilterButton.addEventListener('click', filterAvailableRooms)
 
 
 
@@ -151,6 +157,17 @@ function bookingsDisplay(bookings) {
     })
     return formatedDisplay.sort((a, b) => a.dateNumber - b.dateNumber)
 }
+
+
+
+function getAvailableRooms() {
+   console.log('ARE YOU WORKING')
+    let wut = requestedDate.value.split('-')
+    
+    // datePickerData = requestedDate.value.split('-')
+    // console.log(datePickerData)
+}
+
 
 let currentDate
 
