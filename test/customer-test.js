@@ -2,6 +2,7 @@ import { customers, bookings, rooms } from './test-data'
 import { expect } from 'chai'
 import Customer from '../src/classes/customer'
 import Booking from '../src/classes/booking'
+import Room from '../src/classes/room'
 
 let currentDate
 
@@ -9,10 +10,12 @@ describe('Customer', () => {
     let customer1
     let customer2
     let bookingData
+    let roomData
     
 
     beforeEach(() => {
-        bookingData = rooms.map(booking => new Booking(booking))
+        bookingData = bookings.map(booking => new Booking(booking, roomData))
+        roomData = rooms.map(room => new Room(room))
 
         customer1 = new Customer(customers[0])
         customer2 = new Customer(customers[1])
@@ -106,6 +109,14 @@ describe('Customer', () => {
             "roomNumber": 24
         }
         ])
+    })
+    it('should find sum of users total spent on rooms', function() {
+      customer1 = new Customer(customers[0], roomData, bookingData)
+      console.log('CUSTOMER1', this.allRooms)
+      customer1.totalCost()
+ 
+      expect(customer1.spent).to.equal(358.4)
+      
     })
 
  })

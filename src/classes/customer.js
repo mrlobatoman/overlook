@@ -60,9 +60,11 @@ class Customer {
         })
     }
 
-    totalCost(rooms) {
+    totalCost() {
+        console.log('ROOMS', this.allRooms)
+        // console.log('BOOKINGS', this.allBookings)
        this.spent = this.allBookings.reduce((total, room) => {
-        total += rooms.find(booking => booking.number === room.roomNumber).costPerNight
+        total += this.allRooms.find(booking => booking.number === room.roomNumber).costPerNight
         return total
        }, 0)
     }
