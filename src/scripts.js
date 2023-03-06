@@ -81,7 +81,6 @@ loginForm.addEventListener('click', preventLoad)
     }
 }
 
-    
     function displayAccountInfo() {
         gatherAccountInfo()
         upComingBookingsDiplay()
@@ -94,6 +93,10 @@ loginForm.addEventListener('click', preventLoad)
         userPastBookings = customer.pastBookings
     } 
 
+    function capitalizeFirstChar(data) {
+        return data.charAt(0).toUpperCase() + data.slice(1)
+    }
+
     function upComingBookingsDiplay() {
 let displayFormatedBookings = bookingsDisplay(userUpcomingBookings)
 displayFormatedBookings.forEach(booking => {
@@ -103,9 +106,10 @@ displayFormatedBookings.forEach(booking => {
      <article>
      <article>
         <h3 class="test">
-        ${booking.date}
-        ${booking.roomType}
-        ${booking.bedSize}
+        ${booking.date},
+        ${capitalizeFirstChar(booking.roomType)},
+        ${capitalizeFirstChar(booking.bedSize)},
+        Beds:${booking.numBeds}
         </h3>
 
      </article>
@@ -113,8 +117,6 @@ displayFormatedBookings.forEach(booking => {
     `
     })  
 }
-
-
 
 function bookingsDisplay(bookings) {
     const formatedDisplay = bookings.map(currentBooking => {
