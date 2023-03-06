@@ -31,6 +31,7 @@ let customer
 let clientNumber
 let userUpcomingBookings
 let userPastBookings
+let currentDate
 // let datePickerData
 
 
@@ -78,7 +79,6 @@ roomFilterButton.addEventListener('click', filterAvailableRooms)
                 customer = new Customer(data[0], allRooms, allBookings)
                 displayAccountInfo()
                 setCurrentDate()
-                console.log(customer)
             })
         }
     }
@@ -167,23 +167,21 @@ function getAvailableRooms() {
     numberedDate = Number(numberedDate.join(''))
     console.log(numberedDate)
     if(numberedDate === 0) {
-        availableRooms.className = 'available-rooms-hidden'
         alert('Please select a date')
+    } else if(numberedDate < currentDate) {
+        alert('Please select a future date')
+    } else {
+        availableRooms.className = 'available-rooms'
     }
-   
-   
-    
-    // datePickerData = requestedDate.value.split('-')
-    // console.log(datePickerData)
 }
 
 
-let currentDate
+
 
 function setCurrentDate(){
     const date = new Date()
-    let currentDay = date.getDate()
-    let currentMonth = date.getMonth() + 1
+    let currentDay = ('0' + (date.getDate())).slice(-2)
+    let currentMonth = ('0' + (date.getMonth()+1)).slice(-2)
     let currentYear = date.getFullYear()
     currentDate = `${currentYear}${currentMonth}${currentDay}`
     currentDate = Number(currentDate)
