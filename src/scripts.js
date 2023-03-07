@@ -27,11 +27,12 @@ Promise.all([fetchData('customers'), fetchData('rooms'), fetchData('bookings')])
 let bookingData 
 let customerData = 0
 let roomsData
-let customer
+let availableRoomers
 let clientNumber
 let userUpcomingBookings
 let userPastBookings
 let currentDate
+let customer
 // let datePickerData
 
 
@@ -125,17 +126,17 @@ function pastBookingsDiplay() {
     let displayFormatedBookings = bookingsDisplay(userPastBookings)
     displayFormatedBookings.forEach(booking => {
         console.log('COST', booking.costPerNight)
-        pastBookingsList.innerHTML +=
-        `<article class="past-booking-container">
-         <article>
-         <article>
-            <h3 class="test">
-            ${booking.date},
-            ${capitalizeFirstChar(booking.roomType)},
-            Bill: $${booking.costPerNight}
-            </h3>
-         </article>
-         </article
+        pastBookingsList.innerHTML +=`
+            <article class="past-booking-container">
+            <article>
+            <article>
+                <h3 class="test">
+                ${booking.date},
+                ${capitalizeFirstChar(booking.roomType)},
+                Bill: $${booking.costPerNight}
+                </h3>
+            </article>
+            </article>
         `
         })  
     }
@@ -162,19 +163,51 @@ function bookingsDisplay(bookings) {
 
 
 
+
 function getAvailableRooms() {
+
     let numberedDate = requestedDate.value.split('-')
     numberedDate = Number(numberedDate.join(''))
-    console.log(numberedDate)
     if(numberedDate === 0) {
         alert('Please select a date')
     } else if(numberedDate < currentDate) {
         alert('Please select a future date')
     } else {
         availableRooms.className = 'available-rooms'
+        
+        availableRoomers = customer.findAvailableRooms(numberedDate, allBookings, allRooms)
+        console.log('ALLAVAILROOMS', availableRoomers)
+        showAvailableRooms(availableRoomers)
     }
 }
 
+
+function showAvailableRooms(availableRooms) {
+    availableRooms.innerText = 'are you working?'
+    availableRooms.innerHTML = ''
+
+availableRooms.forEach(currentRoom => {
+    availableRooms.innerHTML += `
+    <article class="past-booking-container">
+    <article>
+    <article>
+        <h3 class="test">
+        ${currentRoom.date},
+        ${capitalizeFirstChar(currentRoom.roomType)},
+        Bill: $${currentRoom.costPerNight}
+        </h3>
+    </article>
+    </article>
+    `
+})
+    if(availableRooms.length === 0) {
+        console.log('APOOLOGY MESSAGE')
+    } else {
+        availableRooms.forEach(currentRoom => {
+
+        })
+    }
+}
 
 
 
