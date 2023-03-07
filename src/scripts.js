@@ -52,6 +52,7 @@ const searchDateButton = document.querySelector('#searchDateButton')
 const roomFilterButton = document.querySelector('#roomFilterButton')
 const requestedDate = document.querySelector('#requestedDate')
 const availableRooms = document.querySelector('#availableRooms')
+const availableRoomsContainer = document.querySelector('#availableRoomsData')
 
 
 loginButton.addEventListener('click', verifyLogin)
@@ -183,30 +184,27 @@ function getAvailableRooms() {
 
 
 function showAvailableRooms(availableRooms) {
-    availableRooms.innerText = 'are you working?'
-    availableRooms.innerHTML = ''
+    if(availableRooms.length === 0) {
+        console.log('APOOLOGY MESSAGE')
+   
+}
+    console.log('FIRING1')
 
 availableRooms.forEach(currentRoom => {
-    availableRooms.innerHTML += `
-    <article class="past-booking-container">
-    <article>
-    <article>
-        <h3 class="test">
-        ${currentRoom.date},
-        ${capitalizeFirstChar(currentRoom.roomType)},
-        Bill: $${currentRoom.costPerNight}
-        </h3>
-    </article>
+    console.log('FIRING2', currentRoom)
+    availableRoomsContainer.innerHTML += `
+    <article class="search-result-container">
+        <article>
+            <h3 class="test">
+            ${capitalizeFirstChar(currentRoom.type)},
+            ${capitalizeFirstChar(currentRoom.bedSize)},
+            Beds: ${currentRoom.numBeds}
+            </h3>
+        </article>
+        <button>book</button?
     </article>
     `
 })
-    if(availableRooms.length === 0) {
-        console.log('APOOLOGY MESSAGE')
-    } else {
-        availableRooms.forEach(currentRoom => {
-
-        })
-    }
 }
 
 

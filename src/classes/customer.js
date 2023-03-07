@@ -61,6 +61,7 @@ class Customer {
     }
 
     findAvailableRooms(date, bookingData, roomData) {
+        
         const bookingList = bookingData.filter(currentBooking => {
             let formatDate = currentBooking.date.split('/')
             formatDate = Number(formatDate.join(''))
@@ -70,12 +71,11 @@ class Customer {
             return room.roomNumber
         })
         let availableRooms = roomData.reduce((acc, room) => {
-            if(getRoomNumber.includes(room.number)) {
+            if(!getRoomNumber.includes(room.number)) {
                 acc.push(room)
             }
             return acc
         }, [])
-        console.log('AVAIL', availableRooms)
         return availableRooms
     }
 
